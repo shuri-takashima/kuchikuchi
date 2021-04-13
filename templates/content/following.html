@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {% for following in followings%}
+        <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
+            <table>
+                <tr>
+                    <td>
+                        <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ following.follower.avatar }}">
+                    </td>
+                    <td>
+                        <a href="{% url 'content:profile' following.follower.pk %}">
+                            {{ following.follower.username}}
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    {% endfor %}
+{% endblock %}

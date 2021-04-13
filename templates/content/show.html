@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
+        <div class="d-flex flex-row">
+            <a href="{% url 'content:profile' content.owner.pk %}">
+                <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ content.owner.avatar }}">
+                {{ content.owner.username }}
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="embed-responsive embed-responsive-21by9">
+                    <video class="embed-responsive-item video-js vjs-big-play-centered"
+                           data-setup='{ "playbackRates": [1, 1.5, 2], "autoplay": true}'
+                           controls
+                           controlsList="nodownload"
+                           oncontextmenu="return false;"
+                           loop
+                           playsinline>
+                        <source src="/media/{{ content.upload }}">
+                    </video>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="flex-column">
+                    <div class="text-break">
+                        <a href="{% url 'content:show' content.pk %}">
+                            {{ content.title }}
+                        </a>
+                    </div>
+                    <div class="text-break">
+                        {{ content.introduction }}
+                    </div>
+                    <div>
+                        <a href="{{ content.urls }}">
+                            URL
+                        </a>
+                    </div>
+                    <div>
+                        {{ content.created_at }}
+                    </div>
+                    <div>
+                        {% if content.owner == request.user %}
+                            <a href="{% url 'content:edit' content.pk%}">
+                                edit
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <diV class="d-flex flex-row">
+        <div>
+            <form action="{% url 'content:show' content.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="good_btn" style="background-color: white; border-color: white; border-style: solid;">
+                    <i class="fas fa-heart" style="color: #cb989c;"></i>
+                </button>
+            </form>
+        </div>
+        <div>
+            {{ good_count }}
+        </div>
+    </diV>
+    <div class="d-flex flex-row">
+        <div style="margin: 1px 6px 1px 6px;">
+            <i class="fas fa-eye" style="color: #cb989c;" ></i>
+        </div>
+        <div>
+            {{ content.views_count }}
+        </div>
+
+    </div>
+    <h3>KUCHIKUCHI</h3>
+    <div style="padding-bottom: 50px;">
+        {% for comment in comments %}
+        <div class="shadow-sm rounded-pill" style="margin: 15px; padding: 15px;">
+            <diV class="flex-column"  style="margin-left: 20px;">
+                <div>
+                    <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ comment.owner.avatar }}">
+                    {{ comment.owner.username }}
+                </div>
+                <div class="text-break">
+                    {{ comment.comment }}
+                </div>
+            </diV>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="fixed-bottom" style="background-color: white; padding: 10px;">
+        <form action="{% url 'content:show' content.pk %}" method="POST">
+            {% csrf_token %}
+            <div class="d-flex justify-content-center">
+                {{ form }}
+                <button type="submit" name="comment_btn"  class="btn btn-white">
+                    <i class="fas fa-comment" style="color: #cb989c;"></i>
+                </button>
+            </div>
+            </form>
+    </div>
+{% endblock %}

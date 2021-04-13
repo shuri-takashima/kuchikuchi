@@ -1,0 +1,8 @@
+media
+*.pyc
+*~
+.idea
+__pycache__
+venv_kuchikuchi
+db.sqlite3
+.DS_Store

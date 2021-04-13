@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {% for good in goods %}
+        <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
+            <div class="d-flex flex-row">
+                <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ good.content.owner.avatar }}">
+                <a href="{% url 'content:profile' good.content.pk %}">
+                    {{ good.content.owner.username}}
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="embed-responsive embed-responsive-21by9">
+                        <video class="embed-responsive-item vide-js"
+                           data-setup='{ "autoplay": true}'
+                           controlsList="nodownload"
+                           oncontextmenu="return false;"
+                           playsinline
+                           loop
+                           muted>
+                            <source src="/media/{{ good.content.upload }}" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="flex-column">
+                        <div class="text-break">
+                            <a href="{% url 'content:show' good.content.pk %}">
+                                {{ good.content.title }}
+                            </a>
+                        </div>
+                        <div>
+                            {{ good.content.created_at }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

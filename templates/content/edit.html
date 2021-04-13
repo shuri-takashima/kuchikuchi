@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %}Edit{% endblock %}
+{% block content %}
+    <form method="POST">
+        <table class="table">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <tr>
+                <th></th>
+                <td>
+                    <button class="btn" style="background: #cb989c; border: none;" type="submit">
+                        編集
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <a href="{% url 'content:delete' object.id %}">
+        削除
+    </a>
+{% endblock %}

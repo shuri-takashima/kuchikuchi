@@ -10,7 +10,7 @@ class Content(models.Model):
     urls = models.URLField(blank=True)
     upload = models.FileField(
         upload_to='files/',
-        validators=[FileExtensionValidator(['mp4'])]
+        validators=[FileExtensionValidator(['mp4', 'webm'])]
     )
     created_at = models.DateTimeField(auto_now_add=True)
     views_count = models.IntegerField(default=0)

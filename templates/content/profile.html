@@ -55,7 +55,7 @@
     <form action="{% url 'content:profile' user.pk %}" method="POST">
         {% csrf_token %}
         <button class="btn" style="background: #cb989c; border: none;" type="submit">
-            {% if following and follower%}
+            {% if following and follower %}
                 unfollow
             {% else %}
                 follow
@@ -83,6 +83,7 @@
                            loop
                            muted>
                         <source src="/media/{{ content.upload }}" type="video/mp4">
+                        <source src="/media/{{ content.upload }}" type="video/webm">
                     </video>
                 </div>
             </div>

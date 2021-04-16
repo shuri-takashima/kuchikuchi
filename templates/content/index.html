@@ -12,13 +12,16 @@
             <div class="col-md-5">
                 <div class="embed-responsive embed-responsive-21by9">
                     <video class="embed-responsive-item vide-js"
-                           data-setup='{ "autoplay": true}'
+                           data-setup={}
                            controlsList="nodownload"
                            oncontextmenu="return false;"
+                           preload="none"
+                           autoplay
                            playsinline
                            loop
                            muted>
                         <source src="/media/{{ content.upload }}" type="video/mp4">
+                        <source src="/media/{{ content.upload }}" type="video/webm">
                     </video>
                 </div>
             </div>
@@ -48,14 +51,17 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="embed-responsive embed-responsive-21by9">
-                    <video class="embed-responsive-item vide-js"
-                           data-setup='{ "autoplay": true}'
-                           controlsList="nodownload"
-                           oncontextmenu="return false;"
-                           playsinline
-                           loop
-                           muted>
+                   <video class="embed-responsive-item vide-js"
+                          data-setup={}
+                          controlsList="nodownload"
+                          oncontextmenu="return false;"
+                          preload="none"
+                          playsinline
+                          autoplay
+                          loop
+                          muted>
                         <source src="/media/{{ item.upload }}" type="video/mp4">
+                        <source src="/media/{{ content.upload }}" type="video/webm" >
                     </video>
                 </div>
             </div>

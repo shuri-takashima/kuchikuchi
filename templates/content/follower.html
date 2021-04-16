@@ -1,5 +1,16 @@
 {% extends 'layout.html' %}
 {% block content %}
+<div class="d-flex flex-row">
+    <div>
+        <img class="img-fluid rounded-circle" style="height: 60px; width: 60px; object-fit: cover;" src="/media/{{ person.avatar }}">
+    </div>
+    <div style="padding: 15px;">
+        <a href="{% url 'content:profile' person.pk%}">
+            {{ person.username }}
+        </a>
+    </div>
+</div>
+
     {% for follower in followers %}
         <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
             <table>

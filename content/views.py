@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -26,7 +26,7 @@ def index(request):
     return render(request, 'content/index.html', params)
 
 def show(request, pk):
-    content = Content.objects.get(id=pk)
+    content = get_object_or_404(Content, id=pk)
     comments = Comment.objects.filter(content=content).order_by('created_at').reverse()
     #SHOWを訪れた時の視聴回数
     content.views_count +=1
@@ -91,7 +91,7 @@ class Edit(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self, **kwargs):
         return reverse_lazy(
             'content:show',
-            kwargs={'pk':self.kwargs['pk']}
+            kwargs={'pk' :self.kwargs['pk']}
         )
 
     # ログインしているユーザが作ったもでなければアクセス不可
@@ -118,7 +118,7 @@ class Delete(LoginRequiredMixin, generic.DeleteView):
 
     def get_queryset(self):
         # このビューで生成されるベースとなるクエリセットを取得
-        base_qs = super(Edit, self).get_queryset()
+        base_qs = super(Delete, self).get_queryset()
         # さらにユーザIDで絞った結果を返す。(存在しないので404が返る)
         # 条件分岐してエラーページを出しても可
         return base_qs.filter(owner=self.request.user)
@@ -131,18 +131,16 @@ class Delete(LoginRequiredMixin, generic.DeleteView):
 @login_required(login_url='/accounts/login/')
 def profile(request, pk):
     contents = Content.objects.filter(owner_id=pk)
-    user = CustomUser.objects.get(id=pk)
+    user = get_object_or_404(CustomUser, id=pk)
     if request.method == 'POST':
         if Connection.objects.filter(following=request.user).filter(follower_id=pk).exists():
             item = Connection.objects.filter(following=request.user).filter(follower_id=pk)
-            messages.success(request, item.follower.username + 'followはずしました。')
             item.delete()
         else:
             follow = Connection(
                 following=request.user,
                 follower=user,
             )
-            messages.success(request, follow.follower.username + 'followしました。')
             follow.save()
     # if文後にかかないと、タイムラグが発生するため。
     following_count = Connection.objects.filter(following_id=pk).count()
@@ -170,6 +168,7 @@ class Following(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['followings'] = Connection.objects.filter(following_id=self.kwargs['pk'])
+        context['person'] = get_object_or_404(CustomUser, id=self.kwargs['pk'])
         return context
 
 class Follower(LoginRequiredMixin, generic.TemplateView):
@@ -177,6 +176,7 @@ class Follower(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['followers'] = Connection.objects.filter(follower_id=self.kwargs['pk'])
+        context['person'] = get_object_or_404(CustomUser, id=self.kwargs['pk'])
         return context
 
 def find(request):

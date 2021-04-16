@@ -2,8 +2,8 @@
 {% block content %}
     <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
         <div class="d-flex flex-row">
+            <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ content.owner.avatar }}">
             <a href="{% url 'content:profile' content.owner.pk %}">
-                <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ content.owner.avatar }}">
                 {{ content.owner.username }}
             </a>
         </div>
@@ -17,7 +17,8 @@
                            oncontextmenu="return false;"
                            loop
                            playsinline>
-                        <source src="/media/{{ content.upload }}">
+                        <source src="/media/{{ content.upload }}" type="video/mp4">
+                        <source src="/media/{{ content.upload }}" type="video/webm">
                     </video>
                 </div>
             </div>

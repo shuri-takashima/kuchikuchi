@@ -2,7 +2,8 @@
 {% block content %}
     <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
         <div class="d-flex flex-row">
-            <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ content.owner.avatar }}">
+            <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;"
+                 src="{{ content.owner.avatar.url }}">
             <a href="{% url 'content:profile' content.owner.pk %}">
                 {{ content.owner.username }}
             </a>
@@ -15,10 +16,9 @@
                            controls
                            controlsList="nodownload"
                            oncontextmenu="return false;"
-                           loop
                            playsinline>
-                        <source src="/media/{{ content.upload }}" type="video/mp4">
-                        <source src="/media/{{ content.upload }}" type="video/webm">
+                        <source src="{{ content.upload.url }}" type="video/mp4">
+                        <source src="{{ content.upload.url }}" type="video/webm">
                     </video>
                 </div>
             </div>
@@ -51,22 +51,10 @@
             </div>
         </div>
     </div>
-    <diV class="d-flex flex-row">
-        <div>
-            <form action="{% url 'content:show' content.pk %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" name="good_btn" style="background-color: white; border-color: white; border-style: solid;">
-                    <i class="fas fa-heart" style="color: #cb989c;"></i>
-                </button>
-            </form>
-        </div>
-        <div>
-            {{ good_count }}
-        </div>
-    </diV>
+{% include 'content/good_form.html' %}
     <div class="d-flex flex-row">
         <div style="margin: 1px 6px 1px 6px;">
-            <i class="fas fa-eye" style="color: #cb989c;" ></i>
+            <i class="fas fa-lg fa-eye" style="color: #cb989c;" ></i>
         </div>
         <div>
             {{ content.views_count }}
@@ -74,30 +62,98 @@
 
     </div>
     <h3>KUCHIKUCHI</h3>
-    <div style="padding-bottom: 50px;">
-        {% for comment in comments %}
-        <div class="shadow-sm rounded-pill" style="margin: 15px; padding: 15px;">
-            <diV class="flex-column"  style="margin-left: 20px;">
-                <div>
-                    <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ comment.owner.avatar }}">
-                    {{ comment.owner.username }}
-                </div>
-                <div class="text-break">
-                    {{ comment.comment }}
-                </div>
-            </diV>
-        </div>
-        {% endfor %}
-    </div>
-    <div class="fixed-bottom" style="background-color: white; padding: 10px;">
-        <form action="{% url 'content:show' content.pk %}" method="POST">
-            {% csrf_token %}
-            <div class="d-flex justify-content-center">
-                {{ form }}
-                <button type="submit" name="comment_btn"  class="btn btn-white">
-                    <i class="fas fa-comment" style="color: #cb989c;"></i>
-                </button>
-            </div>
-            </form>
-    </div>
+<!--<div style="padding-bottom: 50px;" id="comment_ajax">-->
+<!--    <div class="shadow-sm rounded-pill" style="margin: 15px; padding: 15px;">-->
+<!--        <diV class="flex-column"  style="margin-left: 20px;" >-->
+<!--            <div id="comment_user_img">-->
+<!--&lt;!&ndash;                プロフィール画像追加&ndash;&gt;-->
+<!--                <div id="comment_user_username">-->
+<!--&lt;!&ndash;                    ユーザー名追加&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="text-break" id="comment_info" >-->
+<!--&lt;!&ndash;                コメント内容を追加&ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+{% include 'content/comment.html' %}
+<!--    <div style="padding-bottom: 50px;">-->
+<!--        {% for comment in comments %}-->
+<!--        <div class="shadow-sm rounded-pill" style="margin: 15px; padding: 15px;">-->
+<!--            <diV class="flex-column"  style="margin-left: 20px;" >-->
+<!--                <div>-->
+<!--                    <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;"-->
+<!--                         src="/media/{{ comment.owner.avatar }}">-->
+<!--                    {{ comment.owner.username }}-->
+<!--                </div>-->
+<!--                <div class="text-break" >-->
+<!--                        {{ comment.comment }}-->
+<!--                </div>-->
+<!--            </diV>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--    <div class="fixed-bottom" style="background-color: white; padding: 10px;">-->
+<!--        <form action="{% url 'content:comment_btn' %}" method="POST">-->
+<!--            {% csrf_token %}-->
+<!--            <div class="d-flex justify-content-center">-->
+<!--                <input type="text" id="comment_input">-->
+<!--                <button type="submit"  id="comment" class="btn btn-white">-->
+<!--                    <i class="fas fa-lg fa-comment" style="color: #cb989c;"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<script type="text/javascript">
+$(document).ready(function(event){
+    $(document).on('click', '#good', function(event){
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'content:good_btn' %}",
+            data: {
+                'content_id': $(this).attr('name'),
+                'csrfmiddlewaretoken': '{{ csrf_token }}', },
+            dataType: 'json',
+            success: function(response){
+                selector = document.getElementsByName(response.content_id)
+                if(response.gooded){
+                    $(selector).html('<i class="fas fa-lg fa-heart"></i>');
+                    $(selector).css('color', '#cb989c');
+                    $('#good_count').html(response.good_count)
+                }
+                else {
+                    $(selector).html('<i class="far fa-lg fa-heart"></i>');
+                    $(selector).css('color', '#cb989c');
+                }
+                $('#good_count').text(response.count);
+            }
+        });
+    });
+});
+
+$(document).ready(function(event){
+    $(document).on('click', '#comment', function(event){
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'content:comment_btn' %}",
+            data: {
+                'content_id': '{{ content.pk }}',
+                'comment': $('#comment_input').val(),
+                'csrfmiddlewaretoken': '{{ csrf_token }}',},
+            dataType: 'json',
+            success: function(response){
+                $('#comment_input').val('');
+                $('#comment_info').append('<p>' + response.comment + '</p>');
+                $('#comment_user_username').append('<p>' + response.username + '<p>');
+                $('#comment_user_img').append('<img src="' + response.avatar_url + '">');
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

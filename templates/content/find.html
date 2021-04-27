@@ -6,45 +6,9 @@
     <div class="d-flex justify-content-center">
         {{ form.as_p }}
         <button type="submit" class="btn btn-white" style="height: 38px;width: 48px; margin-left: 3px;" >
-            <i class="fas fa-search" style="color:  #ffccff;"></i>
+            <i class="fas fa-lg fa-search" style="color:  #ffccff;"></i>
         </button>
     </div>
 </form>
-    {% for content in contents %}
-    <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
-        <div class="d-flex flex-row">
-            <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ content.owner.avatar }}">
-            <a href="{% url 'content:profile' content.owner.pk %}">
-                {{ content.owner.username}}
-            </a>
-        </div>
-        <div class="row">
-            <div class="col-md-5">
-                <div class="embed-responsive embed-responsive-21by9">
-                    <video class="embed-responsive-item vide-js"
-                           data-setup='{ "autoplay": true}'
-                           controlsList="nodownload"
-                           oncontextmenu="return false;"
-                           playsinline
-                           loop
-                           muted>
-                        <source src="/media/{{ content.upload }}" type="video/mp4">
-                    </video>
-                </div>
-            </div>
-            <div class="col-md-7">
-                <div class="flex-column">
-                    <div>
-                        <a href="{% url 'content:show' content.pk %}">
-                            {{ content.title }}
-                        </a>
-                    </div>
-                    <div>
-                         {{ content.created_at }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
+{% include 'content/video.html' %}
 {% endblock %}

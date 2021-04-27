@@ -2,7 +2,8 @@
 {% block content %}
 <div class="d-flex flex-row">
     <div>
-        <img class="img-fluid rounded-circle" style="height: 60px; width: 60px; object-fit: cover;" src="/media/{{ person.avatar }}">
+        <img class="img-fluid rounded-circle" style="height: 60px; width: 60px; object-fit: cover;"
+             src="{{ person.avatar.url }}">
     </div>
     <div style="padding: 15px;">
         <a href="{% url 'content:profile' person.pk%}">
@@ -15,7 +16,8 @@
             <table>
                 <tr>
                     <td>
-                        <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ following.follower.avatar }}">
+                        <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;"
+                             src="{{ following.follower.avatar.url }}">
                     </td>
                     <td>
                         <a href="{% url 'content:profile' following.follower.pk %}">

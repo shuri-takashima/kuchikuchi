@@ -17,4 +17,4 @@ class Connection(models.Model):
     follower = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='connection_follower')
 
     def __str__(self):
-        return self.following.username + 'follow' +self.follower.username
+        return self.following.username + 'follow' + self.follower.username

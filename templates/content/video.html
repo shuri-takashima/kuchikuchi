@@ -1,0 +1,40 @@
+{% for content in contents %}
+    <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
+        <div class="d-flex flex-row">
+            <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;"
+                 src="{{ content.owner.avatar.url }}">
+            <a href="{% url 'content:profile' content.owner.pk %}">
+                {{ content.owner.username }}
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="embed-responsive embed-responsive-21by9">
+                    <video class="embed-responsive-item"
+                           data-setup={}
+                           controlsList="nodownload"
+                           oncontextmenu="return false;"
+                           playsinline
+                           autoplay
+                           loop
+                           muted>
+                        <source src="{{ content.upload.url }}" type="video/mp4">
+                        <source src="{{ content.upload.url }}" type="video/webm">
+                    </video>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="flex-column">
+                    <div class="text-break">
+                        <a href="{% url 'content:show' content.pk %}">
+                            {{ content.title }}
+                        </a>
+                    </div>
+                    <div>
+                         {{ content.created_at }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

@@ -3,7 +3,8 @@
     {% for good in goods %}
         <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
             <div class="d-flex flex-row">
-                <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="/media/{{ good.content.owner.avatar }}">
+                <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;"
+                     src="{{ good.content.owner.avatar.url }}">
                 <a href="{% url 'content:profile' good.content.owner.pk %}">
                     {{ good.content.owner.username}}
                 </a>
@@ -18,7 +19,7 @@
                            playsinline
                            loop
                            muted>
-                            <source src="/media/{{ good.content.upload }}" type="video/mp4">
+                            <source src="{{ good.content.upload.url }}" type="video/mp4">
                         </video>
                     </div>
                 </div>

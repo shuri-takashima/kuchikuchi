@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.core import serializers
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
@@ -28,42 +30,73 @@ def index(request):
 def show(request, pk):
     content = get_object_or_404(Content, id=pk)
     comments = Comment.objects.filter(content=content).order_by('created_at').reverse()
+    is_good = Good.objects.filter(owner=request.user).filter(content=content)
     #SHOWを訪れた時の視聴回数
     content.views_count +=1
     content.save()
-    #その他count
-    if request.method == 'POST':
-        if 'good_btn' in request.POST:
-            if Good.objects.filter(owner=request.user).filter(content=content).exists():
-                good = Good.objects.filter(owner=request.user).filter(content=content)
-                good.delete()
-                messages.success(request, content.title +' いいねを取り消しました。')
-            else:
-                good = Good(
-                    owner= request.user,
-                    content=content
-                )
-                good.save()
-                messages.success(request, content.title + 'いいねしました!')
-
-
-        elif 'comment_btn' in request.POST:
-            comment = request.POST['comment']
-            comment = Comment(
-                comment = comment,
-                owner=request.user,
-                content=content,
-            )
-            comment.save()
-    #タイムラグのため。
     good_count = Good.objects.filter(content=content).count()
     params ={
-        'content':content,
-        'form': CommentForm, 
-        'comments' : comments,
-        'good_count' : good_count,
+        'content': content,
+        # 'form': CommentForm,
+        'comments': comments,
+        'good_count': good_count,
+        'is_good': is_good,
     }
     return render(request, 'content/show.html', params)
+
+def comment_btn(request):
+    if request.method == 'POST':
+        content = get_object_or_404(Content, pk=request.POST.get('content_id'))
+        owner = request.user
+        comment = request.POST.get('comment')
+        new = Comment(
+            content=content,
+            owner=owner,
+            comment=comment,
+        )
+        new.save()
+
+        params = {
+            'content_id': content.id,
+            'comment': new.comment,
+            'username': new.owner.username,
+            'avatar_url': new.owner.avatar.url,
+        }
+
+    if request.is_ajax():
+        return JsonResponse(params)
+
+
+
+
+def good_btn(request):
+    if request.method == 'POST':
+        content = get_object_or_404(Content, pk=request.POST.get('content_id'))
+        owner = request.user
+        gooded = False
+        good =Good.objects.filter(
+            owner=owner,
+            content=content,
+        )
+        if good.exists():
+            good.delete()
+        else:
+            good.create(
+                owner=owner,
+                content=content,
+            )
+            gooded = True
+        params ={
+            'content_id': content.id,
+            'gooded': gooded,
+            'count': content.good_set.count(),
+        }
+
+        if request.is_ajax():
+            return JsonResponse(params)
+
+
+
 
 class Create(LoginRequiredMixin, generic.CreateView):
     model = Content
@@ -161,6 +194,7 @@ def profile(request, pk):
 @login_required(login_url='/accounts/login/')
 def good(request):
     goods = Good.objects.filter(owner=request.user)
+
     return render(request, 'content/good.html', {'goods': goods})
 
 class Following(LoginRequiredMixin, generic.TemplateView):

@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
+    <div class="shadow-sm rounded show_area">
         <div class="d-flex flex-row">
-            <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;"
+            <img class="my_img"
                  src="{{ content.owner.avatar.url }}">
             <a href="{% url 'content:profile' content.owner.pk %}">
                 {{ content.owner.username }}
@@ -53,63 +53,18 @@
     </div>
 {% include 'content/good_form.html' %}
     <div class="d-flex flex-row">
-        <div style="margin: 1px 6px 1px 6px;">
-            <i class="fas fa-lg fa-eye" style="color: #cb989c;" ></i>
+        <div class="views_count_icon">
+            <i class="fas fa-lg fa-eye submit_icon" ></i>
         </div>
         <div>
             {{ content.views_count }}
         </div>
-
     </div>
     <h3>KUCHIKUCHI</h3>
-<!--<div style="padding-bottom: 50px;" id="comment_ajax">-->
-<!--    <div class="shadow-sm rounded-pill" style="margin: 15px; padding: 15px;">-->
-<!--        <diV class="flex-column"  style="margin-left: 20px;" >-->
-<!--            <div id="comment_user_img">-->
-<!--&lt;!&ndash;                プロフィール画像追加&ndash;&gt;-->
-<!--                <div id="comment_user_username">-->
-<!--&lt;!&ndash;                    ユーザー名追加&ndash;&gt;-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="text-break" id="comment_info" >-->
-<!--&lt;!&ndash;                コメント内容を追加&ndash;&gt;-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 {% include 'content/comment.html' %}
-<!--    <div style="padding-bottom: 50px;">-->
-<!--        {% for comment in comments %}-->
-<!--        <div class="shadow-sm rounded-pill" style="margin: 15px; padding: 15px;">-->
-<!--            <diV class="flex-column"  style="margin-left: 20px;" >-->
-<!--                <div>-->
-<!--                    <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;"-->
-<!--                         src="/media/{{ comment.owner.avatar }}">-->
-<!--                    {{ comment.owner.username }}-->
-<!--                </div>-->
-<!--                <div class="text-break" >-->
-<!--                        {{ comment.comment }}-->
-<!--                </div>-->
-<!--            </diV>-->
-<!--        </div>-->
-<!--        {% endfor %}-->
-<!--    </div>-->
-<!--    <div class="fixed-bottom" style="background-color: white; padding: 10px;">-->
-<!--        <form action="{% url 'content:comment_btn' %}" method="POST">-->
-<!--            {% csrf_token %}-->
-<!--            <div class="d-flex justify-content-center">-->
-<!--                <input type="text" id="comment_input">-->
-<!--                <button type="submit"  id="comment" class="btn btn-white">-->
-<!--                    <i class="fas fa-lg fa-comment" style="color: #cb989c;"></i>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-
 <script type="text/javascript">
 $(document).ready(function(event){
-    $(document).on('click', '#good', function(event){
+    $(document).on('click', '.good_btn', function(event){
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -121,13 +76,10 @@ $(document).ready(function(event){
             success: function(response){
                 selector = document.getElementsByName(response.content_id)
                 if(response.gooded){
-                    $(selector).html('<i class="fas fa-lg fa-heart"></i>');
-                    $(selector).css('color', '#cb989c');
-                    $('#good_count').html(response.good_count)
+                    $(selector).html('<i class="fas fa-lg fa-heart submit_icon"></i>');
                 }
                 else {
-                    $(selector).html('<i class="far fa-lg fa-heart"></i>');
-                    $(selector).css('color', '#cb989c');
+                    $(selector).html('<i class="far fa-lg fa-heart submit_icon"></i>');
                 }
                 $('#good_count').text(response.count);
             }

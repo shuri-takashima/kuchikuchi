@@ -2,9 +2,10 @@
 {% block content %}
 {% include 'content/video.html' %}
     {% for item in items %}
-    <div class="shadow-sm rounded" style="margin: 15px; padding: 15px;">
+    <div class="shadow-sm rounded content_area">
         <div class="d-flex flex-row">
-            <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;" src="{{ item.owner.avatar.url }}">
+            <img class="my_img"
+                 src="{{ item.owner.avatar.url }}">
             <a href="{% url 'content:profile' item.owner.pk %}">
                 {{ item.owner.username}}
             </a>

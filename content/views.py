@@ -66,9 +66,6 @@ def comment_btn(request):
     if request.is_ajax():
         return JsonResponse(params)
 
-
-
-
 def good_btn(request):
     if request.method == 'POST':
         content = get_object_or_404(Content, pk=request.POST.get('content_id'))
@@ -94,9 +91,6 @@ def good_btn(request):
 
         if request.is_ajax():
             return JsonResponse(params)
-
-
-
 
 class Create(LoginRequiredMixin, generic.CreateView):
     model = Content
@@ -165,30 +159,56 @@ class Delete(LoginRequiredMixin, generic.DeleteView):
 def profile(request, pk):
     contents = Content.objects.filter(owner_id=pk)
     user = get_object_or_404(CustomUser, id=pk)
-    if request.method == 'POST':
-        if Connection.objects.filter(following=request.user).filter(follower_id=pk).exists():
-            item = Connection.objects.filter(following=request.user).filter(follower_id=pk)
-            item.delete()
-        else:
-            follow = Connection(
-                following=request.user,
-                follower=user,
-            )
-            follow.save()
+    # if request.method == 'POST':
+    #     if Connection.objects.filter(following=request.user).filter(follower_id=pk).exists():
+    #         item = Connection.objects.filter(following=request.user).filter(follower_id=pk)
+    #         item.delete()
+    #     else:
+    #         follow = Connection(
+    #             following=request.user,
+    #             follower=user,
+    #         )
+    #         follow.save()
     # if文後にかかないと、タイムラグが発生するため。
     following_count = Connection.objects.filter(following_id=pk).count()
     follower_count = Connection.objects.filter(follower_id=pk).count()
-    following = Connection.objects.filter(following=request.user)
-    follower = Connection.objects.filter(follower=user)
+
+    #自分がこのユーザーをfollowしているのか否かを調べる。
+    check = Connection.objects.filter(follower=user, following=request.user)
     params = {
         'contents': contents,
         'user': user,
         'following_count': following_count,
         'follower_count': follower_count,
-        'following': following,
-        'follower': follower,
+        'check': check,
     }
     return render(request, 'content/profile.html', params)
+
+def connection_btn(request):
+    if request.method == 'POST':
+        follower = get_object_or_404(CustomUser, pk=request.POST.get('user_id'))
+        following = request.user
+        checked = False
+        connection = Connection.objects.filter(
+            following=following,
+            follower=follower,
+        )
+        if connection.exists():
+            connection.delete()
+        else:
+            connection.create(
+                following=following,
+                follower=follower,
+            )
+            checked = True
+
+        params = {
+            'checked': checked,
+            'follower_count': Connection.objects.filter(follower=follower).count(),
+        }
+
+        if request.is_ajax():
+            return JsonResponse(params)
 
 
 @login_required(login_url='/accounts/login/')

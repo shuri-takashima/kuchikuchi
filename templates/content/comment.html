@@ -1,9 +1,8 @@
-<div style="padding-bottom: 50px;">
-    {% for comment in comments %}
-    <div class="shadow-sm rounded-pill" style="margin: 15px; padding: 15px;">
-        <diV class="flex-column"  style="margin-left: 20px;" >
+{% for comment in comments %}
+    <div class="shadow-sm rounded-pill comment_area">
+        <diV class="flex-column comment_box">
             <div>
-                <img class="img-fluid rounded-circle" style="height: 30px; width: 30px; object-fit: cover;"
+                <img class="my_img"
                      src="{{ comment.owner.avatar.url }}">
                 {{ comment.owner.username }}
             </div>
@@ -12,15 +11,14 @@
             </div>
         </diV>
     </div>
-    {% endfor %}
-</div>
-<div class="fixed-bottom" style="background-color: white; padding: 10px;">
+{% endfor %}
+<div class="fixed-bottom comment_form_area">
     <form action="{% url 'content:comment_btn' %}" method="POST">
         {% csrf_token %}
         <div class="d-flex justify-content-center">
             <input type="text" id="comment_input">
-            <button type="submit"  id="comment" class="btn btn-white">
-                <i class="fas fa-lg fa-comment" style="color: #cb989c;"></i>
+            <button type="submit"  id="comment" class="btn">
+                <i class="fas fa-lg fa-comment submit_icon"></i>
             </button>
         </div>
     </form>

@@ -1,3 +1,9 @@
+/*
+- bootstrap
+_ 独自のclass
+
+*/
+
 ul {
     padding: 0px;
     list-style: none;
@@ -13,4 +19,108 @@ a:hover {
 
 p {
     margin: 0px;
+}
+
+.header_icon {
+    color: white;
+}
+
+.btn {
+    color: white;
+}
+
+/* layout.html */
+.fixed-top {
+    background-color: #cb989c;
+}
+
+.navbar-brand {
+    padding-left: 21px;
+}
+
+.my_img {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    border-radius: 50%; /* 半径が50%にして、綺麗な円になる。*/
+}
+
+.main {
+    padding-top: 66px;
+}
+
+/* comment.html */
+
+.comment_area {
+    margin: 15px;
+    padding: 15px;
+}
+.comment_box {
+    margin-left: 20px;
+}
+
+.comment_form_area {
+    background-color: white;
+     padding: 10px;
+}
+
+.submit_icon {
+    color: #cb989c;
+}
+
+.submit_btn {
+    background: #cb989c;
+    border: none;
+}
+
+/* find.html */
+.find_btn {
+    height: 38px;
+    width: 48px;
+    margin-left: 3px;
+}
+
+/* follow & follower ページ*/
+.my_profile_img {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.my_profile_username_area {
+    padding: 15px;
+}
+.connection_area {
+    margin: 15px;
+    padding: 15px;
+}
+
+/* good.html*/
+.good_btn {
+    background-color: white;
+    border-color: white;
+    border-style: solid;
+}
+
+/* profile.html */
+.dropdown_area {
+    padding: 15px;
+}
+.follow_and_follower_count {
+    margin: 5px 10px 5px 10px ;
+}
+
+/* show.html */
+.show_area {
+    margin: 15px;
+    padding: 15px;
+}
+.views_count_icon {
+    margin: 1px 6px 1px 6px;
+}
+
+/* index good video */
+.content_area {
+    margin: 15px;
+    padding: 15px;
 }

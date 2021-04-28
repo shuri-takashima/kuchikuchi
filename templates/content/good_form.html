@@ -3,17 +3,14 @@
         <form action="{% url 'content:good_btn' %}" method="POST">
             {% csrf_token %}
             {% if is_good %}
-                <button type="submit"  id="good" name="{{ content.pk }}"
-                        style="background-color: white; border-color: white; border-style: solid;">
-                    <i class="fas fa-lg fa-heart" style="color: #cb989c;"></i>
+                <button type="submit" class="good_btn" name="{{ content.pk }}">
+                    <i class="fas fa-lg fa-heart submit_icon"></i>
                 </button>
             {% else %}
-            <button type="submit" id="good" name="{{ content.pk }}"
-                    style="background-color: white; border-color: white; border-style: solid;">
-                <i class="far fa-lg fa-heart" style="color: #cb989c;"></i>
-            </button>
+                <button type="submit" class="good_btn" name="{{ content.pk }}">
+                    <i class="far fa-lg fa-heart submit_icon"></i>
+                </button>
             {% endif %}
-            </button>
         </form>
     </div>
     <div id="good_count">

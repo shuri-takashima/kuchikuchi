@@ -1,0 +1,11 @@
+<div class="d-flex flex-row">
+    <div>
+        <img class="my_profile_img"
+             src="{{ person.avatar.url }}">
+    </div>
+    <div class="my_profile_username_area">
+        <a href="{% url 'content:profile' person.pk%}">
+        {{ person.username }}
+        </a>
+    </div>
+</div>

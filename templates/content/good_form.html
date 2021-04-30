@@ -1,9 +1,9 @@
 <diV class="d-flex flex-row">
     <div>
-        <form action="{% url 'content:good_btn' %}" method="POST">
+        <form class="good_btn_form" id="{{ content.pk }}" action="{% url 'content:good_btn' %}" method="POST">
             {% csrf_token %}
             {% if is_good %}
-                <button type="submit" class="good_btn" name="{{ content.pk }}">
+                <button type="submit" class="good_btn">
                     <i class="fas fa-lg fa-heart submit_icon"></i>
                 </button>
             {% else %}

@@ -159,17 +159,6 @@ class Delete(LoginRequiredMixin, generic.DeleteView):
 def profile(request, pk):
     contents = Content.objects.filter(owner_id=pk)
     user = get_object_or_404(CustomUser, id=pk)
-    # if request.method == 'POST':
-    #     if Connection.objects.filter(following=request.user).filter(follower_id=pk).exists():
-    #         item = Connection.objects.filter(following=request.user).filter(follower_id=pk)
-    #         item.delete()
-    #     else:
-    #         follow = Connection(
-    #             following=request.user,
-    #             follower=user,
-    #         )
-    #         follow.save()
-    # if文後にかかないと、タイムラグが発生するため。
     following_count = Connection.objects.filter(following_id=pk).count()
     follower_count = Connection.objects.filter(follower_id=pk).count()
 

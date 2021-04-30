@@ -1,4 +1,9 @@
 {% extends 'layout.html' %}
+{% load static %}
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'js/connection.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="d-flex flex-row">
     <div>
@@ -54,9 +59,9 @@
 </div>
 <div>
     {% if request.user != user %}
-    <form action="{% url 'content:connection_btn' %}" method="POST">
+    <form class="connection_btn_form" id="{{ user.pk }}"  action="{% url 'content:connection_btn' %}" method="POST">
         {% csrf_token %}
-        <button class="btn submit_btn" id="check_connection" type="submit">
+        <button class="btn submit_btn" id="check_connection" name="{{ user.pk }}" type="submit">
             {% if check %}
                 unfollow
             {% else %}
@@ -67,29 +72,4 @@
     {% endif %}
 </div>
 {% include 'content/video.html' %}
-<script type="text/javascript">
-$(document).ready(function(event){
-    $(document).on('click', '#check_connection', function(event){
-        event.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'content:connection_btn' %}",
-            data: {
-                'user_id': '{{ user.pk }}',
-                'csrfmiddlewaretoken': '{{ csrf_token }}',
-            },
-            dataType: 'json',
-            success: function(response){
-                if (response.checked){
-                    $('#check_connection').html('unfollow')
-                }
-                else {
-                    $('#check_connection').html('follow')
-                }
-                $('#follower_count').text(response.follower_count)
-            }
-        });
-    });
-});
-</script>
 {% endblock %}

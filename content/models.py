@@ -6,7 +6,7 @@ from django.core.validators import FileExtensionValidator
 class Content(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    introduction = models.TextField()
+    introduction = models.TextField(max_length=500)
     urls = models.URLField(blank=True)
     upload = models.FileField(
         upload_to='files/',

@@ -1,4 +1,9 @@
 {% extends 'layout.html' %}
+{% load static %}
+{% block extra_js %}
+    <script src="{% static 'js/good_btn.js' %}"></script>
+    <script src="{% static 'js/comment_btn.js' %}"></script>
+{% endblock %}
 {% block content %}
     <div class="shadow-sm rounded show_area">
         <div class="d-flex flex-row">
@@ -11,7 +16,7 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="embed-responsive embed-responsive-21by9">
-                    <video class="embed-responsive-item video-js vjs-big-play-centered"
+                    <video-js class="embed-responsive-item vjs-big-play-centered"
                            data-setup='{ "playbackRates": [1, 1.5, 2], "autoplay": true}'
                            controls
                            controlsList="nodownload"
@@ -19,7 +24,7 @@
                            playsinline>
                         <source src="{{ content.upload.url }}" type="video/mp4">
                         <source src="{{ content.upload.url }}" type="video/webm">
-                    </video>
+                    </video-js>
                 </div>
             </div>
             <div class="col-md-7">
@@ -51,7 +56,9 @@
             </div>
         </div>
     </div>
+
 {% include 'content/good_form.html' %}
+
     <div class="d-flex flex-row">
         <div class="views_count_icon">
             <i class="fas fa-lg fa-eye submit_icon" ></i>
@@ -60,52 +67,8 @@
             {{ content.views_count }}
         </div>
     </div>
+
+
     <h3>KUCHIKUCHI</h3>
 {% include 'content/comment.html' %}
-<script type="text/javascript">
-$(document).ready(function(event){
-    $(document).on('click', '.good_btn', function(event){
-        event.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'content:good_btn' %}",
-            data: {
-                'content_id': $(this).attr('name'),
-                'csrfmiddlewaretoken': '{{ csrf_token }}', },
-            dataType: 'json',
-            success: function(response){
-                selector = document.getElementsByName(response.content_id)
-                if(response.gooded){
-                    $(selector).html('<i class="fas fa-lg fa-heart submit_icon"></i>');
-                }
-                else {
-                    $(selector).html('<i class="far fa-lg fa-heart submit_icon"></i>');
-                }
-                $('#good_count').text(response.count);
-            }
-        });
-    });
-});
-
-$(document).ready(function(event){
-    $(document).on('click', '#comment', function(event){
-        event.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'content:comment_btn' %}",
-            data: {
-                'content_id': '{{ content.pk }}',
-                'comment': $('#comment_input').val(),
-                'csrfmiddlewaretoken': '{{ csrf_token }}',},
-            dataType: 'json',
-            success: function(response){
-                $('#comment_input').val('');
-                $('#comment_info').append('<p>' + response.comment + '</p>');
-                $('#comment_user_username').append('<p>' + response.username + '<p>');
-                $('#comment_user_img').append('<img src="' + response.avatar_url + '">');
-            }
-        });
-    });
-});
-</script>
 {% endblock %}

@@ -124,3 +124,15 @@ p {
     margin: 15px;
     padding: 15px;
 }
+
+#img_preview {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#file_preview {
+    height: 175px;
+    width: 311px;
+}

@@ -37,7 +37,7 @@ def show(request, pk):
     good_count = Good.objects.filter(content=content).count()
     params ={
         'content': content,
-        # 'form': CommentForm,
+        'form': CommentForm,
         'comments': comments,
         'good_count': good_count,
         'is_good': is_good,
@@ -46,25 +46,26 @@ def show(request, pk):
 
 def comment_btn(request):
     if request.method == 'POST':
-        content = get_object_or_404(Content, pk=request.POST.get('content_id'))
-        owner = request.user
-        comment = request.POST.get('comment')
-        new = Comment(
-            content=content,
-            owner=owner,
-            comment=comment,
-        )
-        new.save()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            content = get_object_or_404(Content, pk=request.POST.get('content_id'))
+            owner = request.user
+            comment = request.POST.get('comment')
+            new = Comment(
+                content=content,
+                owner=owner,
+                comment=comment,
+            )
+            new.save()
+            params = {
+                'content_id': content.id,
+                'comment': new.comment,
+                'username': new.owner.username,
+                'avatar_url': new.owner.avatar.url,
+            }
 
-        params = {
-            'content_id': content.id,
-            'comment': new.comment,
-            'username': new.owner.username,
-            'avatar_url': new.owner.avatar.url,
-        }
-
-    if request.is_ajax():
-        return JsonResponse(params)
+        if request.is_ajax():
+            return JsonResponse(params)
 
 def good_btn(request):
     if request.method == 'POST':

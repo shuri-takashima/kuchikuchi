@@ -6,14 +6,13 @@ $(function(){
             url: $(this).attr("action"),
             data: {
                 'content_id': $(this).attr("class"),
-                'comment': $('#comment_input').val(),
+                'comment': $('#id_comment').val(),
             },
             dataType: 'json',
             success: function(response){
-                $('#comment_input').val('');
-                $('#comment_info').append('<p>' + response.comment + '</p>');
-                $('#comment_user_username').append('<p>' + response.username + '<p>');
-                $('#comment_user_img').append('<img src="' + response.avatar_url + '">');
+                $('#id_comment').val('');
+                $('#comment_add')
+                    .after('<div class="shadow-sm rounded-pill comment_area"><diV class="flex-column comment_box"><div id="comment_user_username"><img class="my_img"src="' + response.avatar_url + '">' + response.username + '</div><div class="text-break comment_detail" >' + response.comment + '</div></diV></div>')
             }
         });
     });

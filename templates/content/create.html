@@ -1,6 +1,15 @@
 {% extends 'layout.html' %}
+{% load static %}
+{% block extra_js %}
+    <script src="{% static 'js/file_preview.js' %}"></script>
+{% endblock %}
 {% block content %}
     <form method="POST" enctype="multipart/form-data">
+        <video id="file_preview"
+            playsinline
+            autoplay
+            muted>
+        </video>
         <table class="table">
             {% csrf_token %}
             {{ form.as_table }}

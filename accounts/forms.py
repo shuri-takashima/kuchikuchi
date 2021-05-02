@@ -11,7 +11,7 @@ class SignupForm(UserCreationForm):
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control-file'})
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control-file img_preview_form'})
         }
         labels = {
             'username': 'ユーザー名',
@@ -63,7 +63,7 @@ class ProfileEditForm(forms.ModelForm):
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control-file'})
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control-file img_preview_form'})
         }
         labels = {
             'username': 'ユーザー名',

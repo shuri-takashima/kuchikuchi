@@ -9,9 +9,9 @@ class ContentCreate(forms.ModelForm):
         model = Content
         fields =('title', 'introduction', 'upload', 'urls')
         widgets ={
-            'title': forms.TextInput(attrs={'class': 'form^control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
             'introduction': forms.Textarea(attrs={'class': 'form-control'}),
-            'upload': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'upload': forms.ClearableFileInput(attrs={'class': 'form-control-file file_preview_form'}),
             'urls': forms.TextInput(attrs={'class': 'form-control'}),
         }
         labels = {

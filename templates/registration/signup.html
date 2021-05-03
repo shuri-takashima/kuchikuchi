@@ -6,18 +6,12 @@
 
 {% block title %}Signup{% endblock %}
 {% block content %}
-    <h3>ユーザー登録</h3>
-    <img src="" id="img_preview">
-    <table>
-        <form method="POST" enctype="multipart/form-data">
+    <div class="form_area">
+        <form class="common_form" method="POST" enctype="multipart/form-data">
+        <h3>ユーザー登録</h3>
             {% csrf_token %}
-            {{ form.as_table }}
-                <tr>
-                    <th></th>
-                    <td>
-                        <button class="btn submit_btn" type="submit">ユーザー登録</button>
-                    </td>
-                </tr>
-        </form>
-    </table>
+            {{ form.as_p }}
+            <button class="btn submit_btn" type="submit">ユーザー登録</button>
+    </div>
+    </form>
 {% endblock %}

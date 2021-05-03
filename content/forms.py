@@ -9,16 +9,28 @@ class ContentCreate(forms.ModelForm):
         model = Content
         fields =('title', 'introduction', 'upload', 'urls')
         widgets ={
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'introduction': forms.Textarea(attrs={'class': 'form-control'}),
-            'upload': forms.ClearableFileInput(attrs={'class': 'form-control-file file_preview_form'}),
-            'urls': forms.TextInput(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'タイトル'
+            }),
+            'introduction': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': '説明'
+            }),
+            'upload': forms.ClearableFileInput(attrs={
+                'class': 'form-control-file file_preview_form',
+                'placeholder': 'アップロードファイル',
+            }),
+            'urls': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'URL'
+            }),
         }
         labels = {
-            'title': 'タイトル',
-            'introduction': '説明',
-            'upload': 'アップロード',
-            'urls': 'URL',
+            'title': '',
+            'introduction': '',
+            'upload': '',
+            'urls': '',
         }
 
 
@@ -27,15 +39,23 @@ class ContentEdit(forms.ModelForm):
         model = Content
         fields =('title', 'introduction', 'urls')
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'introduction': forms.Textarea(attrs={'class': 'form^control'}),
-            'urls': forms.TextInput(attrs={'class': 'form-control'})
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'タイトル',
+            }),
+            'introduction': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': '説明'
+            }),
+            'urls': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'URL'
+            })
         }
         labels = {
-            'title': 'タイトル',
-            'introduction': '説明',
-            'upload': 'アップロード',
-            'urls': 'URL',
+            'title': '',
+            'introduction': '',
+            'urls': '',
         }
 
 class CommentForm(forms.ModelForm):
@@ -47,6 +67,7 @@ class CommentForm(forms.ModelForm):
         }
         widgets = {
             'comment': forms.TextInput(attrs={
+                'class': 'form-control',
                 'placeholder': 'コメント',
             })
         }
@@ -55,5 +76,8 @@ class FindForm(forms.Form):
     find = forms.CharField(
         label='',
         required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'search', 'class': 'form-control'})
+        widget=forms.TextInput(attrs={
+            'placeholder': 'search',
+            'class': 'form-control',
+        })
     )

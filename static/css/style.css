@@ -4,6 +4,15 @@ _ 独自のclass
 
 */
 
+button:focus {
+    outline:0;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
 ul {
     padding: 0px;
     list-style: none;
@@ -29,6 +38,28 @@ p {
     color: white;
 }
 
+/* form */
+.form_area {
+    margin: 0% 20px;
+    padding: 15px 15px;
+    border: solid;
+    border-color: #cb989c;
+    border-radius: 33px;
+
+}
+.common_form {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+}
+input {
+    margin: 3px 0px;
+}
+label[for="id_avatar"] {
+    width: 100%;
+    text-align: left;
+}
+
 /* layout.html */
 .fixed-top {
     background-color: #cb989c;
@@ -50,27 +81,47 @@ p {
 }
 
 /* comment.html */
-
 .comment_area {
     margin: 15px;
     padding: 15px;
 }
+
 .comment_box {
     margin-left: 20px;
 }
 
 .comment_form_area {
+    /*
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    */
+    text-align: center;
     background-color: white;
-     padding: 10px;
+    padding: 11px 30px;
 }
 
+.comment_btn {
+    display: inline-block;
+    width: 100%;
+    background-color: #cb989c;
+    border-color: white;
+    border-style: solid;
+    border-radius: 33px;
+}
+
+.comment_icon {
+    color: white;
+}
 .submit_icon {
     color: #cb989c;
 }
 
 .submit_btn {
     background: #cb989c;
-    border: none;
+    order-color: white;
+    border-style: solid;
+    border-radius: 33px;
 }
 
 /* find.html */
@@ -136,3 +187,4 @@ p {
     height: 175px;
     width: 311px;
 }
+

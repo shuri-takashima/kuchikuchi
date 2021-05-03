@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .forms import SignupForm, ProfileEditForm
+from django.contrib.auth.views import LoginView, LogoutView
+
+from .forms import SignupForm, ProfileEditForm, LoginForm
 from .models import CustomUser
 
 class SignupView(generic.CreateView):
@@ -37,3 +39,7 @@ class ProfileEdit(generic.UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, '投稿編集できませんでした。')
         return super().form_invalid(form)
+
+class Login(LoginView):
+    form_class = LoginForm
+    template_name = 'registration/login.html'

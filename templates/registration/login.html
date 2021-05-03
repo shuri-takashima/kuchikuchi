@@ -2,30 +2,25 @@
 
 {% block title %}Login{% endblock %}
 {% block content %}
-    <h3>ログイン</h3>
-    <table>
-        <form method="POST">
+    <div class="form_area">
+        <form class="common_form" method="POST">
+            <h3>ログイン</h3>
             {% csrf_token %}
-            {{ form.as_table }}
-                <tr>
-                    <th></th>
-                    <td>
-                        <button class="btn submit_btn" type="submit">ログイン</button>
-                    </td>
-                </tr>
+            {{ form.as_p }}
+            <button class="btn submit_btn" type="submit">ログイン</button>
         </form>
-    </table>
-    <ul style="padding: 0px;">
-        <li>
-            <a href="{% url 'accounts:signup' %}">
-                新規登録
-            </a>
-        </li>
-        <li>
-            <a href = "/accounts/password_reset">
-                パスワードお忘れの方
-            </a>
-        </li>
-    </ul>
+        <ul>
+            <li>
+                <a href="{% url 'accounts:signup' %}">
+                    新規登録
+                </a>
+            </li>
+            <li>
+                <a href = "/accounts/password_reset">
+                    パスワードお忘れの方
+                </a>
+            </li>
+        </ul>
+    </div>
 
 {% endblock %}

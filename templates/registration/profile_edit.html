@@ -6,20 +6,12 @@
 
 {% block title %}Signup{% endblock %}
 {% block content %}
-    <h3>ユーザー編集</h3>
-    <img src="" id="img_preview">
-    <table>
-        <form method="POST" enctype="multipart/form-data">
+        <form class="common_form" method="POST" enctype="multipart/form-data">
+            <h3>ユーザー編集</h3>
             {% csrf_token %}
-            {{ form.as_table }}
-                <tr>
-                    <th></th>
-                    <td>
-                        <button class="btn submit_btn" type="submit">編集</button>
-                    </td>
-                </tr>
+            {{ form.as_p }}
+            <button class="btn submit_btn" type="submit">編集</button>
         </form>
-    </table>
     <a href="/accounts/password_change/">
         パスワード変更
     </a>

@@ -4,23 +4,16 @@
     <script src="{% static 'js/file_preview.js' %}"></script>
 {% endblock %}
 {% block content %}
-    <form method="POST" enctype="multipart/form-data">
+    <form class="common_form" method="POST" enctype="multipart/form-data">
         <video id="file_preview"
             playsinline
             autoplay
             muted>
         </video>
-        <table class="table">
-            {% csrf_token %}
-            {{ form.as_table }}
-            <tr>
-                <th></th>
-                <td>
-                    <button class="btn submit_btn" type="submit">
-                        アップロード
-                    </button>
-                </td>
-            </tr>
-        </table>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn submit_btn" type="submit">
+            アップロード
+        </button>
     </form>
 {% endblock %}

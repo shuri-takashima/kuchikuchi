@@ -148,9 +148,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'content:index'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = 'content:index'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #debug = True をやめたら下記に変更

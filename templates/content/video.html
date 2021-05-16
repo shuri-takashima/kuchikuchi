@@ -1,4 +1,5 @@
 {% for content in contents %}
+
     <div class="shadow-sm rounded content_area">
         <div class="d-flex flex-row">
             <img class="my_img"
@@ -9,30 +10,32 @@
         </div>
         <div class="row">
             <div class="col-md-5">
+            <a href="{% url 'content:show' content.pk %}">
                 <div class="embed-responsive embed-responsive-21by9">
                     <video-js class="embed-responsive-item"
                            data-setup={}
                            controlsList="nodownload"
                            oncontextmenu="return false;"
-                           playsinline
-                           autoplay
-                           loop
-                           muted>
+                           playsinline>
                         <source src="{{ content.upload.url }}" type="video/mp4">
                         <source src="{{ content.upload.url }}" type="video/webm">
                     </video-js>
                 </div>
+            </a>
             </div>
             <div class="col-md-7">
-                <div class="flex-column">
-                    <div class="text-break">
-                        <a href="{% url 'content:show' content.pk %}">
-                            {{ content.title }}
-                        </a>
-                    </div>
-                    <div>
-                         {{ content.created_at }}
-                    </div>
+                <div class="text-break">
+                    <a class="show_title" href="{% url 'content:show' content.pk %}">
+                        {{ content.title }}
+                    </a>
+                </div>
+                <div class="text-break">
+                    {{ content.introduction | truncatechars:100 }}
+                </div>
+                <div class="index_created_at">
+                    <p class="created_at">
+                        {{ content.created_at }}
+                    </p>
                 </div>
             </div>
         </div>

@@ -13,11 +13,11 @@
                 {{ content.owner.username }}
             </a>
         </div>
-        <div class="row">
-            <div class="col-md-5">
+        <div>
+            <div>
                 <div class="embed-responsive embed-responsive-21by9">
                     <video-js class="embed-responsive-item vjs-big-play-centered"
-                           data-setup='{ "playbackRates": [1, 1.5, 2], "autoplay": true}'
+                           data-setup='{ "playbackRates": [1, 1.5, 2] }'
                            controls
                            controlsList="nodownload"
                            oncontextmenu="return false;"
@@ -27,48 +27,50 @@
                     </video-js>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="flex-column">
-                    <div class="text-break">
-                        <a href="{% url 'content:show' content.pk %}">
-                            {{ content.title }}
-                        </a>
+            <div class="show_info_area">
+                <div class="count">
+                    {% include 'content/good_form.html' %}
+                    <div class="d-flex flex-row">
+                        <div class="views_count_icon">
+                            <i class="fas fa-lg fa-eye submit_icon"></i>
+                        </div>
+                        <div>
+                            {{ content.views_count }}
+                        </div>
                     </div>
-                    <div class="text-break">
-                        {{ content.introduction }}
-                    </div>
-                    <div>
+                </div>
+                <div class="text-break">
+                    <h5 class="show_title">
+                        {{ content.title }}
+                    </h5>
+                </div>
+                <div class="text-break">
+                    <p>
+                        {{ content.introduction| linebreaksbr }}
+                    </p>
+                </div>
+                <div class="right_to">
+                    <button class="btn submit_btn">
                         <a href="{{ content.urls }}">
                             URL
                         </a>
-                    </div>
-                    <div>
+                    </button>
+                </div>
+                <div class="right_to">
+                    <p>
                         {{ content.created_at }}
-                    </div>
-                    <div>
-                        {% if content.owner == request.user %}
-                            <a href="{% url 'content:edit' content.pk%}">
-                                edit
-                            </a>
-                        {% endif %}
-                    </div>
+                    </p>
+                </div>
+                <div class="right_to">
+                    {% if content.owner == request.user %}
+                    <a class="a_edit" href="{% url 'content:edit' content.pk%}">
+                        edit
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-
-{% include 'content/good_form.html' %}
-
-    <div class="d-flex flex-row">
-        <div class="views_count_icon">
-            <i class="fas fa-lg fa-eye submit_icon" ></i>
-        </div>
-        <div>
-            {{ content.views_count }}
-        </div>
-    </div>
-
-
-    <h3>KUCHIKUCHI</h3>
 {% include 'content/comment.html' %}
+
 {% endblock %}

@@ -27,6 +27,7 @@ def index(request):
     }
     return render(request, 'content/index.html', params)
 
+@login_required(login_url='accounts:login')
 def show(request, pk):
     content = get_object_or_404(Content, id=pk)
     comments = Comment.objects.filter(content=content).order_by('created_at').reverse()
@@ -156,7 +157,7 @@ class Delete(LoginRequiredMixin, generic.DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='accounts:login')
 def profile(request, pk):
     contents = Content.objects.filter(owner_id=pk)
     user = get_object_or_404(CustomUser, id=pk)
@@ -201,7 +202,7 @@ def connection_btn(request):
             return JsonResponse(params)
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='accounts:login')
 def good(request):
     goods = Good.objects.filter(owner=request.user)
 

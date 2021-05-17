@@ -2,8 +2,10 @@ from django.db import models
 from accounts.models import CustomUser
 from django.core.validators import FileExtensionValidator
 
+import uuid
 
 class Content(models.Model):
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     introduction = models.TextField(max_length=500)
@@ -19,6 +21,7 @@ class Content(models.Model):
         return self.title +'by'+ self.owner.username
 
 class Comment(models.Model):
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
     comment = models.CharField(max_length=250)
@@ -28,6 +31,7 @@ class Comment(models.Model):
 
 
 class Good(models.Model):
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
 

@@ -23,17 +23,18 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
     path('content/', include('content.urls')),
 
 
-    path('logout', views.LogoutView.as_view(), name='logout'),
-    path('password_change', views.PasswordChangeView.as_view(), name='password_change'),
-    path('password_change/done', views.PasswordChangeDoneView.as_view(), name='password_change_done'),
-    path('password_reset', views.PasswordResetView.as_view(), name="password_reset"),
-    path('password_reset/done', views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<uid64>/<token>', views.PasswordResetConfirmView.as_view(), name='reset'),
-    path('reset/done', views.PasswordResetCompleteView.as_view(), name='reset_done'),
+    # path('logout', views.LogoutView.as_view(), name='logout'),
+    # path('password_change', views.PasswordChangeView.as_view(), name='password_change'),
+    # path('password_change/done', views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+    # path('password_reset', views.PasswordResetView.as_view(), name="password_reset"),
+    # path('password_reset/done', views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    # path('reset/<uid64>/<token>', views.PasswordResetConfirmView.as_view(), name='reset'),
+    # path('reset/done', views.PasswordResetCompleteView.as_view(), name='reset_done'),
 ]
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

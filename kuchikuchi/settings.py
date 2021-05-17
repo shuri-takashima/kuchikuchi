@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
-from .settingd_common import *
+# from .settings_common import *
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(^e#sw8x%b$8qdqyc7-j8a0$#-n$w)(k13n4$0)6--2mob637i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -45,6 +45,10 @@ INSTALLED_APPS = [
     'django_cleanup',
     'bootstrap4',
     'axes',
+
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
 
     'django_ses',
 ]
@@ -86,7 +90,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'kuchikuchi.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -139,7 +142,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_ROOT = 'usr/share/nginx/html/static'
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -159,11 +162,10 @@ LOGOUT_REDIRECT_URL = 'content:index'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #debug = True をやめたら下記に変更
-#EMAIL_BACKEND = 'django.core.mail.backends.amtp.EmailBackend
+# EMAIL_BACKEND = 'django.core.mail.backends.amtp.EmailBackend'
 
 #アップロード動画
-MEDIA_ROOT = '/usr/share/nginx/html/static'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 #アクセス
@@ -175,48 +177,48 @@ AXES_META_PRECEDENCE_ORDER = [
     'HTTP_X_FORWORD_FOR'
 ]
 
-#ロギング
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-
-    #ロギング設定
-    'loggers': {
-        #Djangoが利用するロガー
-        'django': {
-            'handlers': ['file'],
-            'level': 'INFO',
-        },
-        #アプリが利用するロガー
-        'kuchikuchi': {
-            'handlers': ['file'],
-            'level': 'INFO',
-        },
-    },
-
-    #ハンドラ設定
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.Timed RotatingFileHandler',
-            'file': os.path(BASE_DIR, 'logs/django.log'),
-            'formatter': 'prod',
-            'when': 'D',
-            'interval': 1,
-            'backupCount': 7,
-        },
-    },
-
-    #フォーマッタの設定
-    'formatters': {
-        'prod': {
-            'format': '¥t'.join([
-                '%(asctime)s',
-                '[%(levelname)s]',
-                '%(pathname)s(Line:%(lineno)d)',
-                '%(message)s',
-            ])
-        },
-    },
-}
+# ロギング
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#
+#     #ロギング設定
+#     'loggers': {
+#         #Djangoが利用するロガー
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#         },
+#         #アプリが利用するロガー
+#         'kuchikuchi': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#         },
+#     },
+#
+#     #ハンドラ設定
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'filename': os.path.join(BASE_DIR, 'logs/django.log'),
+#             'formatter': 'prod',
+#             'when': 'D',
+#             'interval': 1,
+#             'backupCount': 7,
+#         },
+#     },
+#
+#     #フォーマッタの設定
+#     'formatters': {
+#         'prod': {
+#             'format': '¥t'.join([
+#                 '%(asctime)s',
+#                 '[%(levelname)s]',
+#                 '%(pathname)s(Line:%(lineno)d)',
+#                 '%(message)s',
+#             ])
+#         },
+#     },
+# }
 
